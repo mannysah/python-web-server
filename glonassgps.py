@@ -4,9 +4,9 @@ import time
 import serial
 import datetime
 import sys
-from flask import Blueprint
+from flask import (Blueprint, jsonify)
 import RPi.GPIO as GPIO
-import models.Coordinates as Coordinates
+from models.Coordinates import Coordinates
 
 BAUD = 9600
 PORT = '/dev/ttyACM0'
@@ -28,6 +28,7 @@ def readCordinates():
               print lon
               eventtime = datetime.datetime.fromtimestamp(int(float(time))).strftime('%B-%Y-%d %H:%M:%S')
               GPIO.cleanup()
-              return Coordinates(lat, lon, time)
+              coor = Coordinates(lat, lon, eventtime)
+              return jsonify(coor.__dict__)
             except ValueError as e:
                 print e

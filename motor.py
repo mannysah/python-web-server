@@ -1,8 +1,8 @@
-from flask import render_template
-from flask import request
-from flask_api import FlaskAPI
+from flask import (render_template, Blueprint)
 import RPi.GPIO as GPIO
 import time
+
+bp = Blueprint('motor', __name__, url_prefix='/motor')
 
 MOTORPINS = {"pin1A": 36, "pin1B": 38, "pin1E":40}
 GPIO.setmode(GPIO.BOARD)
@@ -10,20 +10,8 @@ GPIO.setup(MOTORPINS["pin1A"], GPIO.OUT)
 GPIO.setup(MOTORPINS["pin1B"], GPIO.OUT)
 GPIO.setup(MOTORPINS["pin1E"], GPIO.OUT)
 
-app = FlaskAPI(__name__)
 
-
-# Create a URL route in our application for "/"
-@app.route('/')
-def home():
-    """
-    This function just responds to the browser ULR
-    localhost:5000/
-    :return:        the rendered template 'home.html'
-    """
-    return render_template('home.html')
-
-@app.route('/api/runMotor',methods=["GET"])
+@bp.route('/run',methods=["GET"])
 def runMotor():
     """
     This function runs the Motor
@@ -47,8 +35,3 @@ def runMotor():
         GPIO.cleanup()
     
     return render_template('motor.html')
-
-
-# If we're running in stand alone mode, run the application
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -6,7 +6,7 @@
 ## More Details:
 ```
 sudo pip install Flask
-sudo pip install Flask-API
+sudo pip install flask-api
 ```
 
 * Run python server.py from the directory you clone this project.

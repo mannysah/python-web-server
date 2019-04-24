@@ -29,3 +29,7 @@ sudo pip install flask-api
 pi@raspberrypi:~ $ gpio write 27 0
 pi@raspberrypi:~ $ gpio write 29 0
 ```
+
+## License
+
+MIT © Mandeep "Manny" Sah 
